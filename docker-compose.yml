@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./eduverify.db
+      - SECRET_KEY=eduverify-ai-sih2026-super-secure-production-ready-jwt-secret-key-32chars
+      - INTEGRATION_MODE=SIMULATED
+    volumes:
+      - ./backend/eduverify.db:/app/eduverify.db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
