@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../api/client';
 import { ShieldCheck, Lock, Mail, AlertCircle, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
@@ -38,7 +39,7 @@ export const LoginPage: React.FC = () => {
       }
     } catch (err: any) {
       if (!err.response) {
-        setError('Cannot connect to backend server. Please make sure the backend is running at http://127.0.0.1:8001.');
+        setError(`Cannot connect to backend server (${API_BASE_URL}). If using Render, the free service may take ~30 seconds to wake up from idle.`);
       } else {
         setError(err.response?.data?.detail || 'Authentication failed. Please verify your credentials.');
       }
